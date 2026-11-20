@@ -1,8 +1,8 @@
 # Proyecto Databricks
 
-Repositorio para organizar los recursos del proyecto de datos del curso de Ingeneniria de datos con Databricks de smartdata: Preparación del ambiente, procesos ETL, seguridad y documentación.
+Proyecto del curso de Ingeniería de Datos con Databricks. Analiza el precio y el volumen de Bitcoin junto con el índice diario de sentimiento de mercado durante 2022–2025. Los archivos de origen y su cobertura se documentan en [Datasets](datasets/README.md).
 
-## Estructura
+## Estructura prevista
 
 | Carpeta | Contenido |
 | --- | --- |
