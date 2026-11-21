@@ -2,6 +2,10 @@
 
 Proyecto del curso de Ingeniería de Datos con Databricks. Analiza el precio y el volumen de Bitcoin junto con el índice diario de sentimiento de mercado durante 2022–2025. Los archivos de origen y su cobertura se documentan en [Datasets](datasets/README.md).
 
+## Preparación del ambiente
+
+El [notebook de preparación](proceso/00_prepare_environment.ipynb) comprueba la lectura de los dos CSV en Raw mediante la ubicación externa de Azure Data Lake Storage y crea los esquemas Bronze, Silver y Gold en Unity Catalog.
+
 ## Estructura prevista
 
 | Carpeta | Contenido |
