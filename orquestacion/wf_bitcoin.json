@@ -1,0 +1,98 @@
+{
+  "name": "bitcoin_etl",
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "prepare_environment",
+      "description": "Comprueba los CSV en Raw y crea los esquemas",
+      "notebook_task": {
+        "notebook_path": "<WORKSPACE_REPO_PATH>/prep-amb/00_prepare_environment",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalog": "catalog_smartdata",
+          "raw_path": "abfss://delta-lake@adlsmartdata0811.dfs.core.windows.net/raw/bitcoin"
+        }
+      },
+      "existing_cluster_id": "<CLUSTER_ID>"
+    },
+    {
+      "task_key": "ingest_binance",
+      "description": "Carga las velas de Binance en Bronze",
+      "depends_on": [
+        {
+          "task_key": "prepare_environment"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "<WORKSPACE_REPO_PATH>/proceso/01_ingest_binance",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalog": "catalog_smartdata",
+          "schema": "bitcoin_bronze",
+          "raw_path": "abfss://delta-lake@adlsmartdata0811.dfs.core.windows.net/raw/bitcoin"
+        }
+      },
+      "existing_cluster_id": "<CLUSTER_ID>"
+    },
+    {
+      "task_key": "ingest_fear_greed",
+      "description": "Carga el índice Fear & Greed en Bronze",
+      "depends_on": [
+        {
+          "task_key": "prepare_environment"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "<WORKSPACE_REPO_PATH>/proceso/02_ingest_fear_greed",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalog": "catalog_smartdata",
+          "schema": "bitcoin_bronze",
+          "raw_path": "abfss://delta-lake@adlsmartdata0811.dfs.core.windows.net/raw/bitcoin"
+        }
+      },
+      "existing_cluster_id": "<CLUSTER_ID>"
+    },
+    {
+      "task_key": "transform_silver",
+      "description": "Normaliza las velas y une mercado y sentimiento por fecha",
+      "depends_on": [
+        {
+          "task_key": "ingest_binance"
+        },
+        {
+          "task_key": "ingest_fear_greed"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "<WORKSPACE_REPO_PATH>/proceso/03_transform_silver",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalog": "catalog_smartdata",
+          "bronze_schema": "bitcoin_bronze",
+          "silver_schema": "bitcoin_silver"
+        }
+      },
+      "existing_cluster_id": "<CLUSTER_ID>"
+    },
+    {
+      "task_key": "load_gold",
+      "description": "Calcula las métricas diarias y el resumen por sentimiento",
+      "depends_on": [
+        {
+          "task_key": "transform_silver"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "<WORKSPACE_REPO_PATH>/proceso/04_load_gold",
+        "source": "WORKSPACE",
+        "base_parameters": {
+          "catalog": "catalog_smartdata",
+          "silver_schema": "bitcoin_silver",
+          "gold_schema": "bitcoin_gold"
+        }
+      },
+      "existing_cluster_id": "<CLUSTER_ID>"
+    }
+  ]
+}

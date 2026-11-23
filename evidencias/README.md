@@ -1,4 +1,4 @@
-# Evidencias y material de consulta
+# Evidencias
 
 ## Ejecución de Gold
 
@@ -11,12 +11,8 @@ La salida de [04_load_gold.ipynb](../proceso/04_load_gold.ipynb) en Databricks m
 
 El [informe de Power BI](../dashboard/README.md) incluye las capturas de Mercado y Sentimiento.
 
-## Hojas de consulta de Databricks
+## Seguridad
 
-| PDF | Uso en el proyecto |
-| --- | --- |
-| [01 · Fundamentos de PySpark y SQL](01-databricks-fundamentos-pyspark-sql.pdf) | Lectura, selección y transformación con DataFrames y SQL. |
-| [02 · ETL](02-databricks-etl.pdf) | Ingesta, transformación y carga por capas. |
-| [03 · Aprovisionamiento](03-databricks-aprovisionamiento.pdf) | Acceso de Azure Databricks a ADLS por identidad administrada. |
-| [04 · Unity Catalog](04-databricks-unity-catalog.pdf) | Catálogos, esquemas, ubicaciones y permisos. |
-| [05 · Delta Lake](05-databricks-delta-lake.pdf) | Tablas Delta y operaciones sobre los datos. |
+El grupo `bitcoin_readers` figura como grupo de cuenta en el workspace.
+
+![Grupo bitcoin_readers en Azure Databricks](bitcoin_readers_group.png)

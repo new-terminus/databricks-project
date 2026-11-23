@@ -59,11 +59,19 @@ El [directorio de datasets](datasets/README.md) detalla las fuentes, archivos in
 
 3. Se abre [bitcoin_sentimiento.pbix](dashboard/bitcoin_sentimiento.pbix) en Power BI Desktop. El archivo incluye una copia importada de las tablas Gold. Para actualizarla, Power BI requiere acceso al entorno de Azure Databricks.
 
+## Orquestación
+
+La [definición del Job](orquestacion/README.md) prepara una ejecución manual del ETL con `ClusterSD`. Después de la preparación se ejecutan las dos ingestas en paralelo. Silver espera a ambas y Gold se ejecuta al final.
+
+## Seguridad
+
+La [configuración de permisos de Gold](seguridad/README.md) prepara el acceso de lectura para el grupo `bitcoin_readers`.
+
 ## Reversión
 
-El notebook [rollback_medallion.ipynb](reversion/rollback_medallion.ipynb) abre con la acción `review` y muestra el tipo y la ruta de las seis tablas de Bitcoin. Con `drop` elimina las tablas administradas en orden Gold, Silver y Bronze. Si encuentra otro tipo de tabla, se detiene antes de eliminar datos.
+El notebook [rollback_medallion.ipynb](reversion/rollback_medallion.ipynb) muestra el tipo y la ruta de las seis tablas de Bitcoin. Con `drop_tables = False` se ejecuta la revisión. Para eliminar las tablas administradas se cambia el valor a `True` y se ejecuta la celda. Si encuentra otro tipo de tabla, se detiene antes de borrar.
 
-Unity Catalog gestiona la limpieza de las rutas administradas después del periodo de recuperación. Para cargar el proyecto de nuevo se ejecutan los notebooks `01` a `04` con los CSV de Raw. [Ciclo de vida de los datos en Unity Catalog](https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/object-storage-lifecycle)
+Unity Catalog realiza la limpieza de los archivos de las tablas administradas después del periodo de recuperación. Para volver a cargar las tablas se ejecutan los notebooks `01` a `04` con los CSV de Raw.
 
 ## Power BI
 
@@ -76,6 +84,10 @@ El [detalle del informe](dashboard/README.md) describe los filtros y cómo se ca
 
 ## Evidencias
 
-La [ejecución de Gold](evidencias/README.md#ejecución-de-gold) muestra el resultado de las dos tablas en Databricks. La carpeta también incluye las hojas de consulta del proyecto.
+La [ejecución de Gold](evidencias/README.md#ejecución-de-gold) muestra el resultado de las dos tablas en Databricks.
 
 ![Resultados de Gold en Databricks con 1.461 filas de métricas diarias y 5 de resumen](evidencias/gold_execution.png)
+
+## Certificaciones
+
+Las [hojas de estudio](certificaciones/README.md) reúnen el material de preparación para los exámenes de Databricks.
