@@ -6,7 +6,7 @@
       "task_key": "prepare_environment",
       "description": "Comprueba los CSV en Raw y crea los esquemas",
       "notebook_task": {
-        "notebook_path": "<WORKSPACE_REPO_PATH>/prep-amb/00_prepare_environment",
+        "notebook_path": "<WORKSPACE_REPO_PATH>/proceso/00_prepare_environment",
         "source": "WORKSPACE",
         "base_parameters": {
           "catalog": "catalog_smartdata",
@@ -91,6 +91,20 @@
           "silver_schema": "bitcoin_silver",
           "gold_schema": "bitcoin_gold"
         }
+      },
+      "existing_cluster_id": "<CLUSTER_ID>"
+    },
+    {
+      "task_key": "grant_gold_access",
+      "description": "Aplica y comprueba los permisos de lectura en Gold",
+      "depends_on": [
+        {
+          "task_key": "load_gold"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "<WORKSPACE_REPO_PATH>/proceso/05_grant_gold_access",
+        "source": "WORKSPACE"
       },
       "existing_cluster_id": "<CLUSTER_ID>"
     }
