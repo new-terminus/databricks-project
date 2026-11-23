@@ -23,3 +23,4 @@ Los dos CSV completos están en `datasets/raw/upload/`. En Azure Portal se abre 
 | `datasets/raw/upload/binance/btcusdt_1m_2022_2025.csv` | 2.103.760 velas por minuto | `delta-lake/raw/bitcoin/binance/btcusdt_1m_2022_2025.csv` |
 | `datasets/raw/upload/alternative-me/fear_greed_2022_2025.csv` | 1.460 valores diarios | `delta-lake/raw/bitcoin/alternative-me/fear_greed_2022_2025.csv` |
 
+Para reconstruir la carga en otro entorno, se extraen los 48 CSV mensuales de `binance/historical/`. Se unen en orden cronológico en `btcusdt_1m_2022_2025.csv` y se agrega una sola vez la cabecera de [la muestra de Binance](binance/btcusdt_sample.csv). El archivo de Alternative.me se toma directamente de la carpeta [alternative-me](alternative-me/). Las rutas locales de la tabla corresponden a los archivos completos preparados para la carga.
